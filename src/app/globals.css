@@ -2,20 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  @font-face {
+    font-family: "druk-wide-web";
+    src: url("../fonts/DrukWideBold.ttf");
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+.wrapper {
+  perspective: 1200px;
+}
+
+.card {
+  transform-style: preserve-3d;
+  transform: rotateX(20deg) rotateY(-15deg);
 }
