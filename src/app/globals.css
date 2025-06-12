@@ -1,19 +1,24 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  --font-druk-wide-web-bold: druk-wide-web-bold, sans-serif;
+  --font-druk-wide-web-super: druk-wide-web-super, sans-serif;
+
+  --color-primary: #191919;
+  --color-secondary: #f57f08;
+}
 
 @layer base {
   @font-face {
-    font-family: "druk-wide-web";
-    src: url("../fonts/DrukWideBold.ttf");
+    font-family: "druk-wide-web-bold";
+    src: url("../fonts/DrukWide-Bold-Trial.otf");
   }
-}
-
-.wrapper {
-  perspective: 1200px;
-}
-
-.card {
-  transform-style: preserve-3d;
-  transform: rotateX(20deg) rotateY(-15deg);
+  @font-face {
+    font-family: "druk-wide-web-super";
+    src: url("../fonts/DrukWide-Super-Trial.otf");
+  }
+  @font-face {
+    font-family: "druk-wide-web-super";
+    src: url("../fonts/DrukWide-Super-Trial.otf");
+  }
 }

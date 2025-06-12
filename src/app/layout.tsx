@@ -3,9 +3,9 @@ import localFont from "next/font/local";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Mario Imanuel - portfolio v1",
+  title: "onlytheflames",
   description:
-    "Aspiring web/motion designer & developer with 1+ year of experience.",
+    "Mario Imanuel Daruranto's portfolio v1. Aspiring web/motion designer & developer with 1+ year of experience.",
 };
 
 export default function RootLayout({
@@ -15,9 +15,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`antialiased bg-[#4208F5]`}>
+      <body className={"antialiased bg-primary"}>
         <main>{children}</main>
       </body>
     </html>
   );
 }
+``;
