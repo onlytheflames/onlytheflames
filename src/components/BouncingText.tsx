@@ -26,7 +26,7 @@ const Bouncing = ({ children, className }: bouncingProps) => {
     { dependencies: [] }
   );
   return (
-    <div ref={bouncingRef} className={cn("", className)}>
+    <div ref={bouncingRef} className={cn("fade-in", className)}>
       {children}
     </div>
   );

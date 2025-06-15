@@ -1,10 +1,9 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, forwardRef, useImperativeHandle } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/all";
-import { text } from "stream/consumers";
 import { cn } from "@/lib/utils";
 
 interface InfiniteHorizontalScrollProps {
@@ -19,69 +18,110 @@ interface InfiniteHorizontalScrollProps {
   position?: string;
 }
 
-const InfiniteHorizontalScroll = ({
-  text,
-  className = "",
-  containerClassName = "",
-  speed = 0.1,
-  scrollDistance = "-=300px",
-  triggerStart = 0,
-  triggerEnd = null, // Will default to window.innerHeight
-  scrub = 0.25,
-  position = "absolute top-[calc(100vh-225px)]",
-}: InfiniteHorizontalScrollProps) => {
-  const firstText = useRef(null);
-  const secondText = useRef(null);
-  const slider = useRef(null);
+// Define the ref methods that will be exposed to the parent
+export interface InfiniteHorizontalScrollRef {
+  getSliderElement: () => HTMLDivElement | null;
+  setSpeed: (newSpeed: number) => void;
+  getCurrentSpeed: () => number;
+  animateSpeed: (newSpeed: number, duration?: number) => void;
+}
 
-  let xPercent = 0;
-  let direction = -1;
-
-  const infiniteHorizontalScrollAnimation = () => {
-    if (xPercent <= -100) {
-      xPercent = 0;
-    }
-    if (xPercent > 0) {
-      xPercent = -100;
-    }
-    gsap.set(firstText.current, { xPercent: xPercent });
-    gsap.set(secondText.current, { xPercent: xPercent });
-    xPercent += speed * direction;
-    requestAnimationFrame(infiniteHorizontalScrollAnimation);
-  };
-
-  useGSAP(
-    () => {
-      gsap.registerPlugin(ScrollTrigger);
-      requestAnimationFrame(infiniteHorizontalScrollAnimation);
-
-      gsap.to(slider.current, {
-        scrollTrigger: {
-          trigger: document.documentElement,
-          start: triggerStart,
-          end: triggerEnd || window.innerHeight,
-          scrub: scrub,
-          onUpdate: (e) => (direction = e.direction * -1),
-        },
-        x: scrollDistance,
-      });
+const InfiniteHorizontalScroll = forwardRef<
+  InfiniteHorizontalScrollRef,
+  InfiniteHorizontalScrollProps
+>(
+  (
+    {
+      text,
+      className = "",
+      containerClassName = "",
+      speed = 0.1,
+      scrollDistance = "-=300px",
+      triggerStart = 0,
+      triggerEnd = null,
+      scrub = 0.25,
+      position = "absolute top-[calc(100vh-225px)]",
     },
-    { dependencies: [speed, scrollDistance, triggerStart, triggerEnd, scrub] }
-  );
+    ref
+  ) => {
+    const firstText = useRef<HTMLParagraphElement>(null);
+    const secondText = useRef<HTMLParagraphElement>(null);
+    const slider = useRef<HTMLDivElement>(null);
 
-  return (
-    <div className={cn(position, containerClassName)}>
-      <div
-        ref={slider}
-        className={cn("relative whitespace-nowrap flex", className)}
-      >
-        <p ref={firstText}>{text}</p>
-        <p ref={secondText} className="absolute left-[100%]">
-          {text}
-        </p>
+    let xPercent = 0;
+    let direction = -1;
+    let currentSpeed = speed;
+
+    // Expose methods to parent component
+    useImperativeHandle(ref, () => ({
+      getSliderElement: () => slider.current,
+      setSpeed: (newSpeed: number) => {
+        currentSpeed = newSpeed;
+      },
+      getCurrentSpeed: () => currentSpeed,
+      animateSpeed: (newSpeed: number, duration: number = 1) => {
+        gsap.to(
+          { speed: currentSpeed },
+          {
+            speed: newSpeed,
+            duration: duration,
+            ease: "power2.inOut",
+            onUpdate: function () {
+              currentSpeed = this.targets()[0].speed;
+            },
+          }
+        );
+      },
+    }));
+
+    const infiniteHorizontalScrollAnimation = () => {
+      if (xPercent <= -100) {
+        xPercent = 0;
+      }
+      if (xPercent > 0) {
+        xPercent = -100;
+      }
+      gsap.set(firstText.current, { xPercent: xPercent });
+      gsap.set(secondText.current, { xPercent: xPercent });
+      xPercent += currentSpeed * direction;
+      requestAnimationFrame(infiniteHorizontalScrollAnimation);
+    };
+
+    useGSAP(
+      () => {
+        gsap.registerPlugin(ScrollTrigger);
+        requestAnimationFrame(infiniteHorizontalScrollAnimation);
+
+        gsap.to(slider.current, {
+          scrollTrigger: {
+            trigger: document.documentElement,
+            start: triggerStart,
+            end: triggerEnd || window.innerHeight,
+            scrub: scrub,
+            onUpdate: (e) => (direction = e.direction * -1),
+          },
+          x: scrollDistance,
+        });
+      },
+      { dependencies: [speed, scrollDistance, triggerStart, triggerEnd, scrub] }
+    );
+
+    return (
+      <div className={cn(position, containerClassName)}>
+        <div
+          ref={slider}
+          className={cn("relative whitespace-nowrap flex opacity-0", className)}
+        >
+          <p ref={firstText}>{text}</p>
+          <p ref={secondText} className="absolute left-[100%]">
+            {text}
+          </p>
+        </div>
       </div>
-    </div>
-  );
-};
+    );
+  }
+);
+
+InfiniteHorizontalScroll.displayName = "InfiniteHorizontalScroll";
 
 export default InfiniteHorizontalScroll;
