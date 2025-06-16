@@ -1,4 +1,4 @@
-### &nbsp;&nbsp;&nbsp;Hello, こんにちは, 안녕하세요, 你好, :D
+### Hello, こんにちは, 안녕하세요, 你好, :D
 
 I'm Mario — I do web development.  
 I build clean, scalable frontends with modern frameworks, and I have a soft spot for animations.
