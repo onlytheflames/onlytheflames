@@ -14,6 +14,7 @@ import Lenis from "lenis";
 import Header from "./Header";
 import AboutSection from "./AboutSection";
 import WorkSection from "./WorkSection";
+import LogoParticles from "./LogoParticles";
 
 const Home = () => {
   const infiniteScrollRef = useRef<InfiniteHorizontalScrollRef>(null);
@@ -60,7 +61,7 @@ const Home = () => {
         // Slow down to normal speed smoothly
         .call(() => {
           if (infiniteScrollRef.current) {
-            infiniteScrollRef.current.animateSpeed(0.1, 2); // Smooth slow down over 1.5 seconds
+            infiniteScrollRef.current.animateSpeed(0.1, 1.5); // Smooth slow down over 1.5 seconds
           }
         })
         .to(
@@ -70,7 +71,7 @@ const Home = () => {
             y: 0,
             duration: 1,
             stagger: 0.25,
-            ease: "power2.out",
+            ease: "power3.out",
           },
           "-=1" // Start 1 second before the speed change completes
         )
@@ -90,6 +91,9 @@ const Home = () => {
             <Header />
           </div>
         </Wrapper>
+
+        {/* Logo Particles */}
+        <LogoParticles />
 
         {/* Infinite Horizontal Scroll */}
         <InfiniteHorizontalScroll
