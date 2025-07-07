@@ -197,7 +197,7 @@ const Preloader: React.FC<PreloaderProps> = ({ children }) => {
       .to(
         ".preloader .intro-title .first-char",
         {
-          x: isMobile ? "9rem" : "21.25rem",
+          x: isMobile ? "8rem" : "21.25rem",
           duration: 1,
         },
         3.5

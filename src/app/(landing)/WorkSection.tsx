@@ -11,7 +11,7 @@ const WorkSection = () => {
       description: "Fullstack Development",
     },
     {
-      title: "amsa",
+      title: "artifax",
       description: "Design & Fullstack Development",
     },
   ];
