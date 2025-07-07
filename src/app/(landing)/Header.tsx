@@ -13,7 +13,7 @@ const Header = () => {
           </div>
         </div>
         <div className="fade-up">
-          <p>Jakarta Indonesia</p>
+          <p>Jakarta, Indonesia</p>
           <AnimatedLink href="/" className="font-bold">
             mariodaruranto68@gmail.com
           </AnimatedLink>

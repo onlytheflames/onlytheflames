@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import Preloader from "./(landing)/Preloader";
 
 export const metadata: Metadata = {
   title: "onlytheflames",

@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import Wrapper from "@/components/Wrapper";
 import InfiniteHorizontalScroll, {
   InfiniteHorizontalScrollRef,
@@ -15,6 +15,7 @@ import Header from "./Header";
 import AboutSection from "./AboutSection";
 import WorkSection from "./WorkSection";
 import LogoParticles from "./LogoParticles";
+import Preloader from "./Preloader";
 
 const Home = () => {
   const infiniteScrollRef = useRef<InfiniteHorizontalScrollRef>(null);
@@ -36,10 +37,6 @@ const Home = () => {
       const tl = gsap.timeline();
 
       // Initial state - hide header, bouncing text, and infinite scroll
-      gsap.set([".fade-up", bouncingTextRef.current], {
-        opacity: 0,
-        y: 30,
-      });
 
       // Fade in the infinite scroll and speed up at the same time
       // @ts-expect-error
@@ -84,37 +81,39 @@ const Home = () => {
     <div
       className={`text-white text-sm font-light pb-32 ${bricolageGrotesque.className}`}
     >
-      {/* Hero */}
-      <div className="w-full overflow-hidden h-dvh relative pt-8">
-        <Wrapper>
-          <div>
-            <Header />
-          </div>
-        </Wrapper>
+      <Preloader>
+        {/* Hero */}
+        <div className="w-full overflow-hidden h-dvh relative pt-8">
+          <Wrapper>
+            <div>
+              <Header />
+            </div>
+          </Wrapper>
 
-        {/* Logo Particles */}
-        <LogoParticles />
+          {/* Logo Particles */}
+          <LogoParticles />
 
-        {/* Infinite Horizontal Scroll */}
-        <InfiniteHorizontalScroll
-          ref={infiniteScrollRef}
-          text="onlytheflames."
-          className="uppercase text-secondary font-druk-wide-web-bold text-9xl"
-          position="absolute top-[calc(100vh-225px)]"
-          speed={0.1}
-          scrollDistance="-=300px"
-        />
+          {/* Infinite Horizontal Scroll */}
+          <InfiniteHorizontalScroll
+            ref={infiniteScrollRef}
+            text="onlytheflames."
+            className="uppercase text-secondary font-druk-wide-web-bold text-9xl"
+            position="absolute top-[calc(100vh-225px)]"
+            speed={0.1}
+            scrollDistance="-=300px"
+          />
 
-        <BouncingText className="absolute font-medium top-[calc(100vh-75px)] left-1/2 -translate-x-1/2">
-          Scroll to explore
-        </BouncingText>
-      </div>
+          <BouncingText className="absolute font-medium top-[calc(100vh-75px)] left-1/2 -translate-x-1/2">
+            Scroll to explore
+          </BouncingText>
+        </div>
 
-      {/* About */}
-      <AboutSection />
+        {/* About */}
+        <AboutSection />
 
-      {/* Work */}
-      <WorkSection />
+        {/* Work */}
+        <WorkSection />
+      </Preloader>
     </div>
   );
 };
