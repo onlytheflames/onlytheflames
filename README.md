@@ -11,7 +11,7 @@ I believe micro-interactions make macro-impressions.
 Tech playground:  
  `TypeScript` • `React` • `Next.js` • `Tailwind` • `Framer Motion` • `GSAP` • `GCP` • `AWS`
 
-check my portfolio:
+check my [portfolio](https://onlytheflames.vercel.app/):
 
 ```
  ▗▄▖ ▗▖  ▗▖▗▖ ▗▖  ▗▖▗▄▄▄▖▗▖ ▗▖▗▄▄▄▖▗▄▄▄▖▗▖    ▗▄▖ ▗▖  ▗▖▗▄▄▄▖ ▗▄▄▖
