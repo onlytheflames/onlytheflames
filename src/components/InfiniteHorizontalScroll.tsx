@@ -47,6 +47,7 @@ const InfiniteHorizontalScroll = forwardRef<
     const firstText = useRef<HTMLParagraphElement>(null);
     const secondText = useRef<HTMLParagraphElement>(null);
     const slider = useRef<HTMLDivElement>(null);
+    const animationIdRef = useRef<number>();
 
     let xPercent = 0;
     let direction = -1;
@@ -75,22 +76,39 @@ const InfiniteHorizontalScroll = forwardRef<
     }));
 
     const infiniteHorizontalScrollAnimation = () => {
+      // Add null checks before using refs
+      if (!firstText.current || !secondText.current) {
+        // If refs are not ready, try again on next frame
+        animationIdRef.current = requestAnimationFrame(
+          infiniteHorizontalScrollAnimation
+        );
+        return;
+      }
+
       if (xPercent <= -100) {
         xPercent = 0;
       }
       if (xPercent > 0) {
         xPercent = -100;
       }
+
       gsap.set(firstText.current, { xPercent: xPercent });
       gsap.set(secondText.current, { xPercent: xPercent });
       xPercent += currentSpeed * direction;
-      requestAnimationFrame(infiniteHorizontalScrollAnimation);
+
+      animationIdRef.current = requestAnimationFrame(
+        infiniteHorizontalScrollAnimation
+      );
     };
 
     useGSAP(
       () => {
         gsap.registerPlugin(ScrollTrigger);
-        requestAnimationFrame(infiniteHorizontalScrollAnimation);
+
+        // Start the animation loop
+        animationIdRef.current = requestAnimationFrame(
+          infiniteHorizontalScrollAnimation
+        );
 
         gsap.to(slider.current, {
           scrollTrigger: {
@@ -102,6 +120,13 @@ const InfiniteHorizontalScroll = forwardRef<
           },
           x: scrollDistance,
         });
+
+        // Cleanup function
+        return () => {
+          if (animationIdRef.current) {
+            cancelAnimationFrame(animationIdRef.current);
+          }
+        };
       },
       { dependencies: [speed, scrollDistance, triggerStart, triggerEnd, scrub] }
     );
