@@ -5,7 +5,7 @@ const AboutSection = () => {
   return (
     <Wrapper className="w-full h-screen flex flex-col items-center justify-center">
       <p className="leading-10 md:leading-20 max-w-md md:max-w-4xl text-2xl md:text-6xl text-center font-medium">
-        Web development that's more than just functional --it's
+        Web development that&apos;s more than just functional --it&apos;s
         transformational.
       </p>
       <Link

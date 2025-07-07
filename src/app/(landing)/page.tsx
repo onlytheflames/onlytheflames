@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import Wrapper from "@/components/Wrapper";
 import InfiniteHorizontalScroll, {
   InfiniteHorizontalScrollRef,
@@ -19,7 +19,7 @@ import Preloader from "./Preloader";
 
 const Home = () => {
   const infiniteScrollRef = useRef<InfiniteHorizontalScrollRef>(null);
-  const bouncingTextRef = useRef<HTMLDivElement>(null);
+  // const bouncingTextRef = useRef<HTMLDivElement>(null);
 
   useGSAP(
     () => {
@@ -39,7 +39,7 @@ const Home = () => {
       // Initial state - hide header, bouncing text, and infinite scroll
 
       // Fade in the infinite scroll and speed up at the same time
-      // @ts-expect-error
+      // @ts-expect-error TweenTarget type error
       tl.to(infiniteScrollRef.current?.getSliderElement(), {
         opacity: 1,
         duration: 1,

@@ -1,5 +1,4 @@
 import AnimatedLink from "@/components/AnimatedLink";
-import { forwardRef } from "react";
 
 const Header = () => {
   return (

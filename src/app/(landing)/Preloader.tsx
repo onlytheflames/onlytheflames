@@ -17,7 +17,7 @@ interface PreloaderProps {
 const Preloader: React.FC<PreloaderProps> = ({ children }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const preloaderRef = useRef<HTMLDivElement>(null);
-  const splitOverlayRef = useRef<HTMLDivElement>(null);
+  //   const splitOverlayRef = useRef<HTMLDivElement>(null);
   const tagsOverlayRef = useRef<HTMLDivElement>(null);
   const mainContainerRef = useRef<HTMLDivElement>(null);
   const [isMobile, setIsMobile] = useState(false);
@@ -63,7 +63,7 @@ const Preloader: React.FC<PreloaderProps> = ({ children }) => {
       });
 
       element.innerHTML = "";
-      charElements.forEach((charEl, index) => {
+      charElements.forEach((charEl) => {
         if (charEl) {
           element.appendChild(charEl);
         } else {
